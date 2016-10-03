@@ -2,5 +2,7 @@
 
 - name: Deploy Django Site
   hosts: local
+  vars:
+    ami: ami-746aba14
   roles:
     - ec2_provisioning
