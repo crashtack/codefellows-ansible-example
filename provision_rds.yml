@@ -1,0 +1,7 @@
+---
+
+  - name: Create RDS instance
+    host: localhost
+    connection: local
+    roles:
+      - rds_creation
