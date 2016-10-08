@@ -4,3 +4,6 @@ provision_servers: no
 zone: us-west-2c
 region: us-west-2
 db_password: "{{ vault_db_password }}"
+db_name: imagerdb
+instance_name: ansible-imager
+include_vars: group_vars/tag_Name_ansible-built/vault.yml

@@ -1,15 +1,15 @@
 ---
 
   - name: Get DB Password
-    include_vars: group_vars/tag_Name_ansible-built/vault.yml
+    include_vars: '{{ include_vars }}'
 
   - name: Create RDS instance
     local_action:
       module: rds
       command: create
       db_engine: postgres
-      db_name: imagerdb
-      instance_name: ansible-imager
+      db_name: '{{ db_name }}'
+      instance_name: '{{ instance_name }}'
       instance_type: db.t2.micro
       license_model: postgresql-license
       vpc_security_groups: sg-8024eff9
