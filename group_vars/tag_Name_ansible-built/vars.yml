@@ -1,0 +1,4 @@
+---
+  gmail: '401.imagersite@gmail.com'
+  db_password: "{{ vault_db_password }}"
+  email_password: "{{ vault_email_password }}"
