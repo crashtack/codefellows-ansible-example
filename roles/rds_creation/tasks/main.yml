@@ -1,7 +1,7 @@
 ---
 
   - name: Get DB Password
-    include_vars: secrets.yml
+    include_vars: group_vars/tag_Name_ansible-built/vault.yml
 
   - name: Create RDS instance
     local_action:
@@ -12,7 +12,7 @@
       instance_name: ansible-imager
       instance_type: db.t2.micro
       license_model: postgresql-license
-      vpc_security_group: sg-8024eff9
+      vpc_security_groups: sg-8024eff9
       zone: '{{ zone }}'
       region: '{{ region }}'
       size: 5

@@ -1,3 +1,6 @@
 ---
 gmail: '401.imagersite@gmail.com'
 provision_servers: no
+zone: us-west-2c
+region: us-west-2
+db_password: "{{ vault_db_password }}"
