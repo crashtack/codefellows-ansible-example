@@ -3,8 +3,15 @@
 - name: Install System Packages
   apt: name={{ item }} state=present update_cache=yes cache_valid_time=3600
   sudo: yes
-  with_items: "{{ system_packages}}"
+  with_items: "{{ system_packages }}"
 
+# - name: Change Media Ownership
+#   sudo: yes
+#   file: path={{ media_path }} owner={{ remote_user }} recurse=yes state=directory
+#
+# - name: Change Static Ownership
+#   sudo: yes
+#   file: path={{ static_path }} owner={{ remote_user }} recurse=yes state=directory
 
 - name: Clone Django Repository
   git: repo=https://github.com/crashtack/django-imager.git
@@ -12,6 +19,14 @@
        force=yes
        version={{ repo_version }}
        depth=1
+
+- name: Change Media Ownership
+  sudo: yes
+  file: path={{ media_path }} owner={{ app_user }} recurse=yes state=directory
+
+- name: Change Static Ownership
+  sudo: yes
+  file: path={{ static_path }} owner={{ app_user }} recurse=yes state=directory
 
 - name: Install Python Dependencies
   pip:
@@ -29,7 +44,6 @@
 - name: Get DB Password
   include_vars: '{{ include_vars }}'
 
-
 - name: Set DB URL
   set_fact:
     db_url: "{{ db_host.ec2_engine }}://{{ db_host.ec2_master_username }}:{{ db_password }}@{{ db_host.ec2__address }}:{{ db_host.ec2__port }}/{{ db_host.ec2_DBName }}"
@@ -39,16 +53,22 @@
 
 - name: Run Migrations
   environment:
+    DJANGO_SETTINGS_MODULE: "{{ django_settings_module }}"
+    SECRET_KEY: "{{ secret_key }}"
     DATABASE_URL: "{{ db_url }}"
   django_manage:
     app_path: "{{ django_home }}"
-    settings: mysite.production
+    virtualenv: "{{ venv_home }}"
+    settings: imagersite.production
     command: migrate
 
 - name: Collect Static Files
   environment:
+    DJANGO_SETTINGS_MODULE: "{{ django_settings_module }}"
+    SECRET_KEY: "{{ secret_key }}"
     DATABASE_URL: "{{ db_url }}"
   django_manage:
     app_path: "{{ django_home }}"
-    settings: mysite.production
+    virtualenv: "{{ venv_home }}"
+    settings: imagersite.production
     command: collectstatic

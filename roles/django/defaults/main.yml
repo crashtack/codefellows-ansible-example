@@ -1,7 +1,12 @@
+remote_user: ubuntu
 user_home: /home/ubuntu
 django_home: "{{ user_home }}/checkout"
 venv_home: "{{ user_home }}/venv"
+django_settings_module: "imagersite.production"
 rds_db_instance: "{{ db_name }}"
+media_path: "{{ django_home }}/media"
+static_path: "{{ django_home }}/static"
+secret_key: "{{ secret_key }}"
 system_packages :
   - build-essential
   - python-dev

@@ -7,3 +7,5 @@ db_password: "{{ vault_db_password }}"
 db_name: imagerdb
 instance_name: ansible-imager
 include_vars: group_vars/tag_Name_ansible-built/vault.yml
+email_host_password: "{{ vault_email_password }}"
+app_user: "www-data"

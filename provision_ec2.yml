@@ -7,3 +7,5 @@
   connection: local
   roles:
     - ec2_provisioning
+
+# $ ansible-playbook -i plugins/inventory provision_ec2.yml --private-key=~/.ssh/*******.pem -e "repo_version=deployed" --ask-vault-pass

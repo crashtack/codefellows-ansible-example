@@ -5,3 +5,5 @@
   connection: local
   roles:
     - rds_creation
+
+# $ ansible-playbook -i plugins/inventory provision_rds.yml --private-key=~/.ssh/*******.pem -e "repo_version=deployed" --ask-vault-pass

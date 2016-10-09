@@ -1,13 +1,24 @@
 ---
 
 - name: Install Requirements
-  sudo: yes
-  pip: name=gunicorn state=present
+  # sudo: yes
+  pip:
+    virtualenv: "{{ venv_home }}"
+    name: gunicorn
+    state: present
 
 - name: Create gunicorn Upstart Job
   sudo: yes
-  template: src=djangoblog.conf.j2 dest=/etc/init/djangoblog.conf
+  template: src=gunicorn.conf.j2 dest=/etc/init/gunicorn.conf
+
+- name: Create gunicorn Log Directory
+  sudo: yes
+  file: path="{{ gunicorn_log_dir }}" state=directory mode=0755
+
+- name: Change Log Directory Ownership
+  sudo: yes
+  file: path="{{ gunicorn_log_dir }}" owner="{{ app_user }}" group=root mode=0755
 
 - name: Start gunicorn Upstart Job
   sudo: yes
-  service: name=djangoblog state=restarted
+  service: name=gunicorn state=restarted
