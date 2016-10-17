@@ -27,4 +27,5 @@ system_packages :
   - tcl8.6-dev
   - tk8.6-dev
 
-repo_version: deployed
+repo_version: deploy2
+instance_name: ansible-imager
